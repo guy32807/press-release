@@ -1,24 +1,25 @@
-import React, { lazy, Suspense } from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import './App.css';
 
-// Lazy load page components
+// Lazy load pages
 const Home = lazy(() => import('./pages/Home'));
+const About = lazy(() => import('./pages/About'));
+const Services = lazy(() => import('./pages/Services'));
+const Pricing = lazy(() => import('./pages/Pricing'));
 const Testimonials = lazy(() => import('./pages/Testimonials'));
 const Blog = lazy(() => import('./pages/Blog'));
+const Contact = lazy(() => import('./pages/Contact'));
 
-// Loading component
-const Loading = () => (
+// Loading fallback
+const LoadingFallback = () => (
   <div style={{ 
     display: 'flex', 
     justifyContent: 'center', 
     alignItems: 'center', 
-    height: '200px',
-    fontSize: '1.2rem',
-    color: '#666'
+    height: '100vh' 
   }}>
     Loading...
   </div>
@@ -29,11 +30,15 @@ function App() {
     <HelmetProvider>
       <Router>
         <Header />
-        <Suspense fallback={<Loading />}>
+        <Suspense fallback={<LoadingFallback />}>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/pricing" element={<Pricing />} />
             <Route path="/testimonials" element={<Testimonials />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/contact" element={<Contact />} />
           </Routes>
         </Suspense>
         <Footer />
